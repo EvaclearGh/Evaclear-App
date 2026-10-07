@@ -1,0 +1,57 @@
+name: Build Android app
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      HAS_KEYSTORE: ${{ secrets.KEYSTORE_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v5
+        with:
+          distribution: temurin
+          java-version: '17'
+
+      - uses: android-actions/setup-android@v3
+
+      - name: Install Android 16 (API 36) SDK
+        run: sdkmanager "platforms;android-36" "build-tools;36.0.0"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: Build test APK (debug)
+        run: |
+          chmod +x gradlew
+          ./gradlew assembleDebug --stacktrace
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: evaclear-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
+
+      - name: Decode signing key
+        if: env.HAS_KEYSTORE == 'true'
+        run: echo "${{ secrets.KEYSTORE_BASE64 }}" | base64 --decode > "$RUNNER_TEMP/evaclear-upload.jks"
+
+      - name: Build Play Store bundle (AAB) and signed APK
+        if: env.HAS_KEYSTORE == 'true'
+        env:
+          EVACLEAR_KEYSTORE_FILE: ${{ runner.temp }}/evaclear-upload.jks
+          EVACLEAR_KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+          EVACLEAR_KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+          EVACLEAR_KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+        run: ./gradlew bundleRelease assembleRelease --stacktrace
+
+      - uses: actions/upload-artifact@v4
+        if: env.HAS_KEYSTORE == 'true'
+        with:
+          name: evaclear-release-for-play-store
+          path: |
+            app/build/outputs/bundle/release/*.aab
+            app/build/outputs/apk/release/*.apk
