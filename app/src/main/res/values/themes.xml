@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Main app theme. The website draws its own header, so there is no action bar. -->
+    <style name="Theme.Evaclear" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/evc_primary</item>
+        <item name="colorPrimaryDark">@color/evc_primary_dark</item>
+        <item name="colorAccent">@color/evc_aqua</item>
+        <item name="android:windowBackground">@color/evc_bg</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="29">false</item>
+    </style>
+
+    <!-- Splash screen (Android 12+ system splash, back-ported to older versions by core-splashscreen). -->
+    <style name="Theme.Evaclear.Starting" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/evc_primary</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_splash</item>
+        <item name="postSplashScreenTheme">@style/Theme.Evaclear</item>
+    </style>
+</resources>

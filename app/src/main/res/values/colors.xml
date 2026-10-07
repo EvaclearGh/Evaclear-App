@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="evc_primary">#0F5C5A</color>
+    <color name="evc_primary_dark">#0A4240</color>
+    <color name="evc_aqua">#A8E3D9</color>
+    <color name="evc_aqua_soft">#A8E3D9</color>
+    <color name="evc_bg">#FAF7F2</color>
+    <color name="evc_ink">#1D2B2A</color>
+    <color name="evc_muted">#5B6B69</color>
+    <color name="ic_launcher_background">#0F5C5A</color>
+</resources>

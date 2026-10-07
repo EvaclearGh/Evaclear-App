@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Evaclear</string>
+    <string name="offline_title">You\'re offline</string>
+    <string name="offline_body">We can\'t reach the internet right now. Check your data or Wi-Fi and try again. Your cart is saved.</string>
+    <string name="offline_retry">Try again</string>
+    <string name="offline_call">Call us: 025 611 6151</string>
+    <string name="offline_phone" translatable="false">+233256116151</string>
+    <string name="no_app_found">No app found to open this link.</string>
+    <string name="choose_file">Choose a file</string>
+</resources>
